@@ -1,0 +1,13 @@
+{
+  "name": "scraper_js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "puppeteer": "^19.8.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
