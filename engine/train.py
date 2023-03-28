@@ -268,7 +268,10 @@ while True:
     for micro_step in range(gradient_accumulation_steps):
         if ddp:
             model.require_backward_grad_sync = (micro_step == gradient_accumulation_steps - 1)
-        with ctx:
+
+        # This is is pure magic, i do not know how the fuck it works
+        # but it works ok? DONT'T EVENR TOUCH IT
+        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16) as autocast, torch.backends.cuda.sdp_kernel(enable_flash=False) as disable:
             logits, loss = model(X, Y)
         X, Y = get_batch('train')
         scaler.scale(loss).backward()
